@@ -46,23 +46,32 @@ var getFoursquare = function(foursquareURL) {
     $.ajax({
         url: foursquareURL,
         dataType: "jsonp",
-        success: function(data) {
-            console.log(data.response.groups[0].items);
-            for (var i = 0; i < data.response.groups[0].items.length; i++){
-                console.log(data.response.groups[0].items[i].venue.name);
+        complete: function(data) {
+            for (var i = 0; i < data.responseJSON.response.groups[0].items.length; i++){
+                //console.log(data.responseJSON.response.groups[0].items[i].venue);
+                var markerLoc = {lat: data.responseJSON.response.groups[0].items[i].venue.location.lat, lng: data.responseJSON.response.groups[0].items[i].venue.location.lng};
+                var markerTitle = data.responseJSON.response.groups[0].items[i].venue.name;
+                addMarker(markerLoc, markerTitle);
             }
         }
     })
-    // $.getJSON(foursquareURL, function (data) {
-    //     var foursquareData = data;
-    //     console.log('fetching FS data')
-    // }).done(function(e) {
-    //     console.log('FS fetched')
-    //     return foursquareData
-    // }).error(function(e) {
-    //     console.log("error");
-    // });
 };
+
+var markerLatLng = {lat: 55.6638947, lng: 12.54254};
+var infowindow;
+var addMarker = function(markerLatLng, markerTitle) {
+    infowindow = new google.maps.InfoWindow({
+        content: markerTitle
+    });
+    var marker = new google.maps.Marker({
+        position: markerLatLng,
+        map: map,
+        title: markerTitle
+    });
+    marker.addListener('click', function() {
+        infowindow.open(map, marker);
+    });
+}
 
 getFoursquare(foursquareURL);
 // var changeLoc = function(){
