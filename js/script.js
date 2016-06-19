@@ -3,10 +3,10 @@ var viewmodel = {
         console.log('viewModel.init run')
         //console.log(model.neighboorhood)
         model.init();
-        viewmodel.getFoursquare(model.foursquareURL, '&section=food');
-        viewmodel.getFoursquare(model.foursquareURL, '&section=drinks');
-        viewmodel.getFoursquare(model.foursquareURL, '&section=coffee');
-        viewmodel.getFoursquare(model.foursquareURL, '&section=sights');
+        viewmodel.getFoursquare(model.foursquareURL, '&section=food', 'images/icons/food.png');
+        viewmodel.getFoursquare(model.foursquareURL, '&section=drinks', 'images/icons/drinks.png');
+        viewmodel.getFoursquare(model.foursquareURL, '&section=coffee', 'images/icons/coffee.png');
+        viewmodel.getFoursquare(model.foursquareURL, '&section=sights', 'images/icons/sights.png');
         //console.log(model.neighboorhoodLocation);
     },
 
@@ -28,12 +28,13 @@ var viewmodel = {
         //return result
     },
 
-    addMarker: function(markerLatLng, markerTitle) {
+    addMarker: function(markerLatLng, markerTitle, icon) {
         view.markers.push(new google.maps.Marker({
             position: markerLatLng,
             map: map,
             animation: google.maps.Animation.DROP,
-            title: markerTitle
+            title: markerTitle,
+            icon: icon
         }));
         var markerIndex = view.markers.length-1;
         view.markers[markerIndex].addListener('click', function() {
@@ -57,7 +58,7 @@ var viewmodel = {
         }
     },
 
-    getFoursquare: function(foursquareURL, query) {
+    getFoursquare: function(foursquareURL, query, icon) {
         var URL = foursquareURL + query
         $.ajax({
             url: URL,
@@ -67,7 +68,7 @@ var viewmodel = {
                     //console.log(data.responseJSON.response.groups[0].items[i].venue);
                     var markerLoc = {lat: data.responseJSON.response.groups[0].items[i].venue.location.lat, lng: data.responseJSON.response.groups[0].items[i].venue.location.lng};
                     var markerTitle = data.responseJSON.response.groups[0].items[i].venue.name;
-                    viewmodel.addMarker(markerLoc, markerTitle);
+                    viewmodel.addMarker(markerLoc, markerTitle, icon);
                 }
             }
         })
@@ -89,7 +90,7 @@ var model = {
         lat: 55.6699947,
         lng: 12.54854
     },
-    foursquareURL: 'https://api.foursquare.com/v2/venues/explore?client_id=0ICNLWRURL412ESDGRHE1QBZ4UIPCAWSNEHZHGHKI4ERTHSC&client_secret=HNBI1JXSBGIGHUBRJT1Q14RJ1X1WW4OD5ZNZSHJWOEGSJFZQ&v=20130815&ll=55.6638947,12.54254'
+    foursquareURL: 'https://api.foursquare.com/v2/venues/explore?client_id=0ICNLWRURL412ESDGRHE1QBZ4UIPCAWSNEHZHGHKI4ERTHSC&client_secret=HNBI1JXSBGIGHUBRJT1Q14RJ1X1WW4OD5ZNZSHJWOEGSJFZQ&v=20130815&ll=55.6638947,12.54254&limit=20'
 }
 
 
