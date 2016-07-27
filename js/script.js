@@ -3,10 +3,11 @@ var viewmodel = {
         console.log('viewModel.init run')
         //console.log(model.neighboorhood)
         model.init();
-        viewmodel.getFoursquare(model.foursquareURL, '&section=food', 'images/icons/food.png');
-        viewmodel.getFoursquare(model.foursquareURL, '&section=drinks', 'images/icons/drinks.png');
-        viewmodel.getFoursquare(model.foursquareURL, '&section=coffee', 'images/icons/coffee.png');
-        viewmodel.getFoursquare(model.foursquareURL, '&section=sights', 'images/icons/sights.png');
+        viewmodel.getFoursquare(model.foursquareURL, 'food', 'images/icons/food.png', 4),
+        viewmodel.getFoursquare(model.foursquareURL, 'drinks', 'images/icons/drinks.png', 4),
+        viewmodel.getFoursquare(model.foursquareURL, 'coffee', 'images/icons/coffee.png', 4),
+        viewmodel.getFoursquare(model.foursquareURL, 'sights', 'images/icons/sights.png', 4)
+        console.log("adding markers")
         //console.log(model.neighboorhoodLocation);
     },
 
@@ -26,6 +27,12 @@ var viewmodel = {
         });
         //console.log(result)
         //return result
+    },
+
+    addMarkers: function() {
+        for (var i = 0; i < model.places.length; i++) {
+            viewmodel.addMarker(model.places[i].location, model.places[i].name, model.places[i].icon);
+        }
     },
 
     addMarker: function(markerLatLng, markerTitle, icon) {
@@ -58,17 +65,55 @@ var viewmodel = {
         }
     },
 
-    getFoursquare: function(foursquareURL, query, icon) {
+    getFoursquare: function(foursquareURL, query, icon, numberOfRequests) {
         var URL = foursquareURL + query
         $.ajax({
             url: URL,
             dataType: "jsonp",
             complete: function(data) {
                 for (var i = 0; i < data.responseJSON.response.groups[0].items.length; i++){
-                    //console.log(data.responseJSON.response.groups[0].items[i].venue);
-                    var markerLoc = {lat: data.responseJSON.response.groups[0].items[i].venue.location.lat, lng: data.responseJSON.response.groups[0].items[i].venue.location.lng};
-                    var markerTitle = data.responseJSON.response.groups[0].items[i].venue.name;
-                    viewmodel.addMarker(markerLoc, markerTitle, icon);
+                    //console.log(data.responseJSON.response.groups[0].items[i].venue.name);
+                    //console.log(data.responseJSON.response.groups[0].items[i])
+                    var placeIndex = -1;
+                    for (var j = 0; j < model.places.length; j++) {
+                        if (model.places[j].name == data.responseJSON.response.groups[0].items[i].venue.name) {
+                            placeIndex = j;
+                            console.log(placeIndex);
+                        };
+                    }
+                    if (false) {
+                        //do stuff
+                    }else {
+                        var subcategory = [];
+                        for (var j = 0; j < data.responseJSON.response.groups[0].items[i].venue.categories.length; j++){
+                            subcategory.push(data.responseJSON.response.groups[0].items[i].venue.categories[j].name);
+                            //console.log(data.responseJSON.response.groups[0].items[i].venue.categories[j].name);
+                        };
+                        //console.log(category);
+                        var place = {
+                            name: data.responseJSON.response.groups[0].items[i].venue.name,
+                            location: {lat: data.responseJSON.response.groups[0].items[i].venue.location.lat, lng: data.responseJSON.response.groups[0].items[i].venue.location.lng},
+                            url: data.responseJSON.response.groups[0].items[i].venue.url,
+                            rating: data.responseJSON.response.groups[0].items[i].venue.rating,
+                            price: data.responseJSON.response.groups[0].items[i].venue.price,
+                            category: [query],
+                            subcategory: subcategory,
+                            icon: icon
+                        };
+                        model.places.push(place);
+                    }
+
+                    if (i == data.responseJSON.response.groups[0].items.length - 1) {
+                        model.foursquareCounter ++;
+                    };
+                    if (model.foursquareCounter == numberOfRequests) {
+                        viewmodel.addMarkers();
+                        model.foursquareCounter = 0;
+                    }
+                    //var markerLoc = {lat: data.responseJSON.response.groups[0].items[i].venue.location.lat, lng: data.responseJSON.response.groups[0].items[i].venue.location.lng};
+                    //var markerTitle = data.responseJSON.response.groups[0].items[i].venue.name;
+                    //viewmodel.addMarker(markerLoc, markerTitle, icon);
+                    console.log("foursquare data fetched")
                 }
             }
         })
@@ -84,13 +129,15 @@ var model = {
     init: function() {
         console.log('model.init run');
     },
+    foursquareCounter: 0,
     googleApiKey: 'AIzaSyCiUDq49n825eKvj7ecY7wW_Z3M0k3b-M4',
     neighboorhood: 'Vesterbro, København',
     neighboorhoodLocation: { //55.6638947,12.54254    55.672308, 12.563953
         lat: 55.6699947,
         lng: 12.54854
     },
-    foursquareURL: 'https://api.foursquare.com/v2/venues/explore?client_id=0ICNLWRURL412ESDGRHE1QBZ4UIPCAWSNEHZHGHKI4ERTHSC&client_secret=HNBI1JXSBGIGHUBRJT1Q14RJ1X1WW4OD5ZNZSHJWOEGSJFZQ&v=20130815&ll=55.6638947,12.54254&limit=20'
+    places: [],
+    foursquareURL: 'https://api.foursquare.com/v2/venues/explore?client_id=0ICNLWRURL412ESDGRHE1QBZ4UIPCAWSNEHZHGHKI4ERTHSC&client_secret=HNBI1JXSBGIGHUBRJT1Q14RJ1X1WW4OD5ZNZSHJWOEGSJFZQ&v=20130815&ll=55.6638947,12.54254&limit=20&query='
 }
 
 
