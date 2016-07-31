@@ -74,35 +74,23 @@ var viewmodel = {
                 for (var i = 0; i < data.responseJSON.response.groups[0].items.length; i++){
                     //console.log(data.responseJSON.response.groups[0].items[i].venue.name);
                     //console.log(data.responseJSON.response.groups[0].items[i])
-                    var placeIndex = -1;
-                    for (var j = 0; j < model.places.length; j++) {
-                        if (model.places[j].name == data.responseJSON.response.groups[0].items[i].venue.name) {
-                            placeIndex = j;
-                            console.log(placeIndex);
-                        };
-                    }
-                    if (false) {
-                        //do stuff
-                    }else {
-                        var subcategory = [];
-                        for (var j = 0; j < data.responseJSON.response.groups[0].items[i].venue.categories.length; j++){
-                            subcategory.push(data.responseJSON.response.groups[0].items[i].venue.categories[j].name);
-                            //console.log(data.responseJSON.response.groups[0].items[i].venue.categories[j].name);
-                        };
-                        //console.log(category);
-                        var place = {
-                            name: data.responseJSON.response.groups[0].items[i].venue.name,
-                            location: {lat: data.responseJSON.response.groups[0].items[i].venue.location.lat, lng: data.responseJSON.response.groups[0].items[i].venue.location.lng},
-                            url: data.responseJSON.response.groups[0].items[i].venue.url,
-                            rating: data.responseJSON.response.groups[0].items[i].venue.rating,
-                            price: data.responseJSON.response.groups[0].items[i].venue.price,
-                            category: [query],
-                            subcategory: subcategory,
-                            icon: icon
-                        };
-                        model.places.push(place);
-                    }
-
+                    var subcategory = [];
+                    for (var j = 0; j < data.responseJSON.response.groups[0].items[i].venue.categories.length; j++){
+                        subcategory.push(data.responseJSON.response.groups[0].items[i].venue.categories[j].name);
+                        //console.log(data.responseJSON.response.groups[0].items[i].venue.categories[j].name);
+                    };
+                    var place = {
+                        name: data.responseJSON.response.groups[0].items[i].venue.name,
+                        location: {lat: data.responseJSON.response.groups[0].items[i].venue.location.lat, lng: data.responseJSON.response.groups[0].items[i].venue.location.lng},
+                        url: data.responseJSON.response.groups[0].items[i].venue.url,
+                        rating: data.responseJSON.response.groups[0].items[i].venue.rating,
+                        price: data.responseJSON.response.groups[0].items[i].venue.price,
+                        category: [query],
+                        subcategory: subcategory,
+                        icon: icon
+                    };
+                    model.places.push(place);
+                    // Check wether it's the last request
                     if (i == data.responseJSON.response.groups[0].items.length - 1) {
                         model.foursquareCounter ++;
                     };
@@ -141,6 +129,17 @@ var model = {
 }
 
 
+$( ".cross" ).hide();
+$( ".hamburger" ).click(function() {
+    $( ".hamburger" ).hide();
+    $( ".cross" ).show();
+    document.getElementById("list").style.width = "20%";
+});
+$( ".cross" ).click(function() {
+    $( ".cross" ).hide();
+    $( ".hamburger" ).show();
+    document.getElementById("list").style.width = "0%";
+});
 
 
 // var changeLoc = function(){
@@ -157,6 +156,7 @@ function initMap() {
     console.log('initMapRun')
     map = new google.maps.Map(document.getElementById('mapContainer'), {
         center: {lat: model.neighboorhoodLocation.lat, lng: model.neighboorhoodLocation.lng},
-        zoom: 16
+        zoom: 16,
+        disableDefaultUI: true
     });
 }
