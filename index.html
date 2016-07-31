@@ -14,7 +14,14 @@
           <button class="hamburger">&#9776;</button>
           <button class="cross">&#735;</button>
       </div>
-      <div id="list"></div>
+      <div id="list">
+        <table>
+          <tbody data-bind="foreach: places">
+            <tr>List</td>
+            <tr data-bind="text: name"></td>
+          </tbody>
+        </table>
+      </div>
       <div id="mapContainer"></div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>

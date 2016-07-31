@@ -14,11 +14,12 @@ html, body {
 }
 #list {
 	height: 100%;
+	width: 20%;
+	display: none;
 	position: fixed;
 	z-index: 1;
 	left: 0;
 	top: 0;
-	width: 0%;
 	background-color: #999999;
 }
 /*#button {

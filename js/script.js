@@ -30,8 +30,8 @@ var viewmodel = {
     },
 
     addMarkers: function() {
-        for (var i = 0; i < model.places.length; i++) {
-            viewmodel.addMarker(model.places[i].location, model.places[i].name, model.places[i].icon);
+        for (var i = 0; i < model.places().length; i++) {
+            viewmodel.addMarker(model.places()[i].location, model.places()[i].name, model.places()[i].icon);
         }
     },
 
@@ -124,22 +124,31 @@ var model = {
         lat: 55.6699947,
         lng: 12.54854
     },
-    places: [],
-    foursquareURL: 'https://api.foursquare.com/v2/venues/explore?client_id=0ICNLWRURL412ESDGRHE1QBZ4UIPCAWSNEHZHGHKI4ERTHSC&client_secret=HNBI1JXSBGIGHUBRJT1Q14RJ1X1WW4OD5ZNZSHJWOEGSJFZQ&v=20130815&ll=55.6638947,12.54254&limit=20&query='
+    places: ko.observableArray([]),
+    foursquareURL: 'https://api.foursquare.com/v2/venues/explore?client_id=0ICNLWRURL412ESDGRHE1QBZ4UIPCAWSNEHZHGHKI4ERTHSC&client_secret=HNBI1JXSBGIGHUBRJT1Q14RJ1X1WW4OD5ZNZSHJWOEGSJFZQ&v=20130815&ll=55.6638947,12.54254&limit=20&query=',
+    seats: ko.observableArray([
+        {name: "Steve"},
+        {name: "Bert"}
+    ])
 }
 
 
-$( ".cross" ).hide();
-$( ".hamburger" ).click(function() {
-    $( ".hamburger" ).hide();
-    $( ".cross" ).show();
-    document.getElementById("list").style.width = "20%";
+$(".cross").hide();
+$(".hamburger").click(function() {
+    $(".hamburger").hide();
+    $(".cross").show();
+    document.getElementById("list").style.display = "block";
 });
-$( ".cross" ).click(function() {
-    $( ".cross" ).hide();
-    $( ".hamburger" ).show();
-    document.getElementById("list").style.width = "0%";
+$(".cross").click(function() {
+    $(".cross").hide();
+    $(".hamburger").show();
+    document.getElementById("list").style.display = "none";
 });
+
+
+
+ko.applyBindings(model);
+
 
 
 // var changeLoc = function(){
