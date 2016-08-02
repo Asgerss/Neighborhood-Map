@@ -15,49 +15,64 @@ html, body {
 #list {
 	height: 100%;
 	width: 20%;
-	display: none;
 	position: fixed;
 	z-index: 1;
 	left: 0;
 	top: 0;
-	background-color: #999999;
+	background-color: #F95E3C;
+  padding-left: 10px;
+  padding-right: 10px;
+  overflow: auto;
 }
-/*#button {
-	position: fixed;
-	z-index: 2;
-	left: 0;
-	top: 0;
-	font-size: 2em;
-} */
-
-.hamburger{
-  background: none;
+#listItems {
+  padding-top: 50px;
+}
+#listHeader {
+  font-style: 2em;
+  padding-left: 50px;
+  padding-top: 7px;
+  z-index: 5;
   position: absolute;
+}
+#listHeading {
+  padding-left: 10px;
+}
+
+
+
+/* Animated hamburger icon found at http://elijahmanor.com/css-animated-hamburger-icon/ */
+#nav-toggle { position: absolute; left: 15%; top: 37%; }
+#nav-toggle { cursor: pointer; padding: 10px 35px 16px 0px; }
+#nav-toggle span, #nav-toggle span:before, #nav-toggle span:after {
+  cursor: pointer;
+  border-radius: 1px;
+  height: 5px;
+  width: 35px;
+  background: black;
+  position: absolute;
+  display: block;
+  content: '';
+  z-index: 3;
+}
+#nav-toggle span:before {
+  top: -10px; 
+}
+#nav-toggle span:after {
+  bottom: -10px;
+}
+
+#nav-toggle span, #nav-toggle span:before, #nav-toggle span:after {
+  transition: all 500ms ease-in-out;
+}
+#nav-toggle.active span {
+  background-color: transparent;
+}
+#nav-toggle.active span:before, #nav-toggle.active span:after {
   top: 0;
-  left: 0;
-  line-height: 45px;
-  padding: 0px 15px 0px 15px;
-  color: #555555;
-  border: 0;
-  font-size: 3em;
-  font-weight: bold;
-  cursor: pointer;
-  outline: none;
-  z-index: 3;
 }
-
-.cross{
-  background: none;
-  position: absolute;
-  top: 0px;
-  left: 0;
-  padding: 30px 15px 0px 15px;
-  color: #555555;
-  border: 0;
-  font-size: 7em;
-  line-height: 65px;
-  font-weight: bold;
-  cursor: pointer;
-  outline: none;
-  z-index: 3;
+#nav-toggle.active span:before {
+  transform: rotate(45deg);
+}
+#nav-toggle.active span:after {
+  transform: rotate(-45deg);
 }

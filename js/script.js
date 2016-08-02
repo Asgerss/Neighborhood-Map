@@ -31,37 +31,71 @@ var viewmodel = {
 
     addMarkers: function() {
         for (var i = 0; i < model.places().length; i++) {
-            viewmodel.addMarker(model.places()[i].location, model.places()[i].name, model.places()[i].icon);
+            viewmodel.addMarker(model.places()[i]);
         }
     },
 
-    addMarker: function(markerLatLng, markerTitle, icon) {
+    addMarker: function(place) {
         view.markers.push(new google.maps.Marker({
-            position: markerLatLng,
+            position: place.location,
             map: map,
             animation: google.maps.Animation.DROP,
-            title: markerTitle,
-            icon: icon
+            title: place.name,
+            icon: place.icon
         }));
-        var markerIndex = view.markers.length-1;
-        view.markers[markerIndex].addListener('click', function() {
+        view.markers[place.index].addListener('click', function() {
             viewmodel.markerBounceStop();
-            view.markers[markerIndex].setAnimation(google.maps.Animation.BOUNCE);
+            view.markers[place.index].setAnimation(google.maps.Animation.BOUNCE);
         });
-        view.markers[markerIndex].addListener('click', function() {
-            if (view.infowindow) {
-                view.infowindow.close();
-            };
-            view.infowindow = new google.maps.InfoWindow({
-                content: '<b>' + this.title + '</b>'
-            });
-            view.infowindow.open(map, view.markers[markerIndex]);
+        view.markers[place.index].addListener('click', function() {
+            viewmodel.openInfoWindow(place);
         });
+    },
+
+    openInfoWindow: function(place) {
+        if (view.infowindow) {
+            view.infowindow.close();
+        };
+        view.infowindow = new google.maps.InfoWindow({
+            content: '<b>' + place.name + '</b>'
+        });
+        view.infowindow.open(map, view.markers[place.index]);
+    },
+
+    hideMarker: function(i) {
+        view.markers[i].setMap(null);
+    },
+
+    showMarker: function(i) {
+        view.markers[i].setMap(map);
     },
 
     markerBounceStop: function() {
         for (var i = 0; i < view.markers.length; i++){
             view.markers[i].setAnimation(null);
+        }
+    },
+
+    listClick: function(data) {
+        viewmodel.openInfoWindow(data);
+
+    },
+
+    listCatClick: function(index) {
+        if (view.listExpand[index]()) {
+            view.listExpand[index](false);
+            for (var i = 0; i < model.places().length; i++) {
+                if (model.places()[i].category == model.categories[index]) {
+                    viewmodel.hideMarker(i);
+                }
+            }
+        } else {
+            view.listExpand[index](true);
+            for (var i = 0; i < model.places().length; i++) {
+                if (model.places()[i].category == model.categories[index]) {
+                    viewmodel.showMarker(i);
+                }
+            }
         }
     },
 
@@ -87,7 +121,8 @@ var viewmodel = {
                         price: data.responseJSON.response.groups[0].items[i].venue.price,
                         category: [query],
                         subcategory: subcategory,
-                        icon: icon
+                        icon: icon,
+                        index: model.places().length
                     };
                     model.places.push(place);
                     // Check wether it's the last request
@@ -110,6 +145,7 @@ var viewmodel = {
 
 var view = {
     markers: [],
+    listExpand: [ko.observable(true),ko.observable(true),ko.observable(true),ko.observable(true)],
     infowindow: null
 }
 
@@ -117,7 +153,9 @@ var model = {
     init: function() {
         console.log('model.init run');
     },
+    categories: ["food", "drinks", "coffee", "sights"],
     foursquareCounter: 0,
+    listOpen: ko.observable(true),
     googleApiKey: 'AIzaSyCiUDq49n825eKvj7ecY7wW_Z3M0k3b-M4',
     neighboorhood: 'Vesterbro, København',
     neighboorhoodLocation: { //55.6638947,12.54254    55.672308, 12.563953
@@ -125,31 +163,25 @@ var model = {
         lng: 12.54854
     },
     places: ko.observableArray([]),
-    foursquareURL: 'https://api.foursquare.com/v2/venues/explore?client_id=0ICNLWRURL412ESDGRHE1QBZ4UIPCAWSNEHZHGHKI4ERTHSC&client_secret=HNBI1JXSBGIGHUBRJT1Q14RJ1X1WW4OD5ZNZSHJWOEGSJFZQ&v=20130815&ll=55.6638947,12.54254&limit=20&query=',
-    seats: ko.observableArray([
-        {name: "Steve"},
-        {name: "Bert"}
-    ])
+    foursquareURL: 'https://api.foursquare.com/v2/venues/explore?client_id=0ICNLWRURL412ESDGRHE1QBZ4UIPCAWSNEHZHGHKI4ERTHSC&client_secret=HNBI1JXSBGIGHUBRJT1Q14RJ1X1WW4OD5ZNZSHJWOEGSJFZQ&v=20130815&ll=55.6638947,12.54254&limit=20&query='
 }
 
-
-$(".cross").hide();
-$(".hamburger").click(function() {
-    $(".hamburger").hide();
-    $(".cross").show();
-    document.getElementById("list").style.display = "block";
-});
-$(".cross").click(function() {
-    $(".cross").hide();
-    $(".hamburger").show();
-    document.getElementById("list").style.display = "none";
-});
-
+document.querySelector( "#nav-toggle" )
+  .addEventListener( "click", function() {
+    this.classList.toggle( "active" );
+    if (model.listOpen() == false) {
+        model.listOpen(true);
+    } else {
+        model.listOpen(false);
+    }
+  });
 
 
 ko.applyBindings(model);
 
-
+var test = function(i) {
+    console.log(i);
+};
 
 // var changeLoc = function(){
 //     console.log("change location");
