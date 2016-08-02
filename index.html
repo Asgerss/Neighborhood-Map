@@ -8,54 +8,51 @@
 	</style>
 	</head>
 	<body>
-    <!-- <input type="text" name="Neighborhood" value="Vesterbro, København"> -->
-    <div id="container">
-    	<div id="listHeader">
-          <!-- <button class="hamburger">&#9776;</button>
-          <button class="cross">&#735;</button> -->
-        	<a id="nav-toggle" href="#"><span></span></a><h2><b id="listHeading" data-bind="style: { opacity: model.listOpen() ? 1 : 0 }">Places</b></h2></tr>
-    	</div>
-    	<div id="list" data-bind="visible: model.listOpen()">
-	      	<div id="listItems">
-		      	<h3 data-bind="click: viewmodel.listCatClick.bind($data, 0)">Food</h3>
-		      	<div data-bind="visible: view.listExpand[0]()">
-			    	<ul data-bind="foreach: model.places">
-			    		<div data-bind="if: category == 'food'">
-				        	<li data-bind="text: name, click: viewmodel.listClick.bind($data)"></li>
+	<div id="container">
+		<div id="listHeader">
+			<a id="nav-toggle" href="#"><span></span></a><h2><b id="listHeading" data-bind="style: { opacity: model.listOpen() ? 1 : 0 }">Places</b></h2></tr>
+		</div>
+		<div id="list" data-bind="visible: model.listOpen()">
+			<div id="listItems">
+				<h3 data-bind="click: viewmodel.listCatClick.bind($data, 0)"><span data-bind="visible: !view.listExpand[0]()">&#9744;</span><span data-bind="visible: view.listExpand[0]()">&#9745;</span> Food <span data-bind="visible: !view.listExpand[0]()">&#9656;</span><span data-bind="visible: view.listExpand[0]()">&#9662;</span></h3>
+				<div data-bind="visible: view.listExpand[0]()">
+					<ul data-bind="foreach: model.places">
+						<div data-bind="if: category == 'food'">
+							<li data-bind="text: name, click: viewmodel.listClick.bind($data)"></li>
 						</div>
-			    	</ul>
-		    	</div>
-		        <h3 data-bind="click: viewmodel.listCatClick.bind($data, 1)">Drinks</h3>
-		    	<div data-bind="visible: view.listExpand[1]()">
-			    	<ul data-bind="foreach: model.places">
-			    		<div data-bind="if: category == 'drinks'">
-				        	<li data-bind="text: name, click: viewmodel.listClick.bind($data)"></li>
+					</ul>
+				</div>
+				<h3 data-bind="click: viewmodel.listCatClick.bind($data, 1)"><span data-bind="visible: !view.listExpand[1]()">&#9744;</span><span data-bind="visible: view.listExpand[1]()">&#9745;</span> Drinks <span data-bind="visible: !view.listExpand[1]()">&#9656;</span><span data-bind="visible: view.listExpand[1]()">&#9662;</span></h3>
+				<div data-bind="visible: view.listExpand[1]()">
+					<ul data-bind="foreach: model.places">
+						<div data-bind="if: category == 'drinks'">
+							<li data-bind="text: name, click: viewmodel.listClick.bind($data)"></li>
 						</div>
-			    	</ul>
-		    	</div>
-		      	<h3 data-bind="click: viewmodel.listCatClick.bind($data, 2)">Coffee</h3>
-		    	<div data-bind="visible: view.listExpand[2]()">
-			    	<ul data-bind="foreach: model.places">
-			    		<div data-bind="if: category == 'coffee'">
-				        	<li data-bind="text: name, click: viewmodel.listClick.bind($data)"></li>
+					</ul>
+				</div>
+				<h3 data-bind="click: viewmodel.listCatClick.bind($data, 2)"><span data-bind="visible: !view.listExpand[2]()">&#9744;</span><span data-bind="visible: view.listExpand[2]()">&#9745;</span> Coffee <span data-bind="visible: !view.listExpand[2]()">&#9656;</span><span data-bind="visible: view.listExpand[2]()">&#9662;</span></h3>
+				<div data-bind="visible: view.listExpand[2]()">
+					<ul data-bind="foreach: model.places">
+						<div data-bind="if: category == 'coffee'">
+							<li data-bind="text: name, click: viewmodel.listClick.bind($data)"></li>
 						</div>
-			    	</ul>
-		    	</div>
-		      	<h3 data-bind="click: viewmodel.listCatClick.bind($data, 3)">Sights</h3>
-		    	<div data-bind="visible: view.listExpand[3]()">
-			    	<ul data-bind="foreach: model.places">
-			    		<div data-bind="if: category == 'sights'">
-				        	<li data-bind="text: name, click: viewmodel.listClick.bind($data)"></li>
+					</ul>
+				</div>
+				<h3 data-bind="click: viewmodel.listCatClick.bind($data, 3)"><span data-bind="visible: !view.listExpand[3]()">&#9744;</span><span data-bind="visible: view.listExpand[3]()">&#9745;</span> Sights <span data-bind="visible: !view.listExpand[3]()">&#9656;</span><span data-bind="visible: view.listExpand[3]()">&#9662;</span></h3>
+				<div data-bind="visible: view.listExpand[3]()">
+					<ul data-bind="foreach: model.places">
+						<div data-bind="if: category == 'sights'">
+							<li data-bind="text: name, click: viewmodel.listClick.bind($data)"></li>
 						</div>
-			    	</ul>
-		    	</div>
-		    </div>
-    	</div>
-    	<div id="mapContainer"></div>
-    	</div>
-    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    	<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
-    	<script src="js/script.js"></script>
-    	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCiUDq49n825eKvj7ecY7wW_Z3M0k3b-M4&callback=initMap" async defer></script>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div id="mapContainer"></div>
+		</div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+		<script src="js/script.js"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCiUDq49n825eKvj7ecY7wW_Z3M0k3b-M4&callback=initMap" async defer></script>
 	</body>
 </html>
