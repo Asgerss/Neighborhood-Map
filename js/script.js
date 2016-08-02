@@ -105,11 +105,6 @@ var viewmodel = {
 				for (var i = 0; i < data.responseJSON.response.groups[0].items.length; i++){
 					//console.log(data.responseJSON.response.groups[0].items[i].venue.name);
 					//console.log(data.responseJSON.response.groups[0].items[i].tips[0].text)
-					var subcategory = [];
-					for (var j = 0; j < data.responseJSON.response.groups[0].items[i].venue.categories.length; j++){
-						subcategory.push(data.responseJSON.response.groups[0].items[i].venue.categories[j].name);
-						//console.log(data.responseJSON.response.groups[0].items[i].venue.categories[j].name);
-					};
 					var place = {
 						name: data.responseJSON.response.groups[0].items[i].venue.name,
 						location: {lat: data.responseJSON.response.groups[0].items[i].venue.location.lat, lng: data.responseJSON.response.groups[0].items[i].venue.location.lng},
@@ -117,7 +112,6 @@ var viewmodel = {
 						rating: data.responseJSON.response.groups[0].items[i].venue.rating,
 						price: data.responseJSON.response.groups[0].items[i].venue.price,
 						category: [query],
-						subcategory: subcategory,
 						icon: icon,
 						index: model.places().length,
 						review: data.responseJSON.response.groups[0].items[i].tips[0].text
