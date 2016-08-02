@@ -25,7 +25,7 @@ ul {
 	z-index: 1;
 	left: 0;
 	top: 0;
-	background-color: #F95E3C;
+	background-color: #CCCCCC;
 	padding-left: 10px;
 	padding-right: 10px;
 	overflow: auto;
@@ -46,7 +46,6 @@ ul {
 #review {
 	color: #808080;
 }
-
 
 /* Animated hamburger icon found at http://elijahmanor.com/css-animated-hamburger-icon/ all credit goes to Elijah Manor */
 #nav-toggle { position: absolute; left: 15%; top: 37%; }

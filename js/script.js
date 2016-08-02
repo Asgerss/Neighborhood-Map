@@ -13,21 +13,21 @@ var viewmodel = {
 
 	// get lat and lng from google
 	// skal kunne håndtere flere resultater
-	getLatLng: function(location) {
-		var latlngURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + location;
-		var result;
-		$.getJSON(latlngURL, function (data) {
-			var location = data.results[0].geometry.location;
-			console.log('fetching location')
-		}).done(function(e) {
-			console.log('location fetched')
-			return location
-		}).error(function(e) {
-			console.log("error");
-		});
+	// getLatLng: function(location) {
+	// 	var latlngURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + location;
+	// 	var result;
+	// 	$.getJSON(latlngURL, function (data) {
+	// 		var location = data.results[0].geometry.location;
+	// 		console.log('fetching location')
+	// 	}).done(function(e) {
+	// 		console.log('location fetched')
+	// 		return location
+	// 	}).error(function(e) {
+	// 		alert("Unable to fetch coordinates from google");
+	// 	});
 		//console.log(result)
 		//return result
-	},
+	//},
 
 	addMarkers: function() {
 		for (var i = 0; i < model.places().length; i++) {
@@ -101,6 +101,9 @@ var viewmodel = {
 		$.ajax({
 			url: URL,
 			dataType: "jsonp",
+			error: function() {
+				alert("Unable to fetch data from Foursquare");
+			},
 			complete: function(data) {
 				for (var i = 0; i < data.responseJSON.response.groups[0].items.length; i++){
 					//console.log(data.responseJSON.response.groups[0].items[i].venue.name);
@@ -150,7 +153,7 @@ var model = {
 	foursquareCounter: 0,
 	listOpen: ko.observable(false),
 	googleApiKey: 'AIzaSyCiUDq49n825eKvj7ecY7wW_Z3M0k3b-M4',
-	neighboorhood: 'Vesterbro, København',
+	//neighboorhood: 'Vesterbro, København',
 	neighboorhoodLocation: { //55.6638947,12.54254    55.672308, 12.563953
 		lat: 55.6699947,
 		lng: 12.54854
