@@ -43,10 +43,12 @@ ul {
 #listHeading {
 	padding-left: 10px;
 }
+#review {
+	color: #808080;
+}
 
 
-
-/* Animated hamburger icon found at http://elijahmanor.com/css-animated-hamburger-icon/ */
+/* Animated hamburger icon found at http://elijahmanor.com/css-animated-hamburger-icon/ all credit goes to Elijah Manor */
 #nav-toggle { position: absolute; left: 15%; top: 37%; }
 #nav-toggle { cursor: pointer; padding: 10px 35px 16px 0px; }
 #nav-toggle span, #nav-toggle span:before, #nav-toggle span:after {

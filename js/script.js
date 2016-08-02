@@ -57,7 +57,8 @@ var viewmodel = {
 			website = '<a href="' + place.url + '">Website</a>';
 		};
 		view.infowindow = new google.maps.InfoWindow({
-			content: '<b>' + place.name + '</b>' + '<br>' + 'Rating: ' + place.rating + '<br>' + website
+			content: '<b>' + place.name + '</b>' + '<br>' + 'Rating: ' + place.rating + '<br>' + website + '<br><i id="review">"' + place.review + '"</i>',
+			maxWidth: 200
 		});
 		view.infowindow.open(map, view.markers[place.index]);
 		view.markers[place.index].setAnimation(google.maps.Animation.BOUNCE);
@@ -103,7 +104,7 @@ var viewmodel = {
 			complete: function(data) {
 				for (var i = 0; i < data.responseJSON.response.groups[0].items.length; i++){
 					//console.log(data.responseJSON.response.groups[0].items[i].venue.name);
-					//console.log(data.responseJSON.response.groups[0].items[i])
+					//console.log(data.responseJSON.response.groups[0].items[i].tips[0].text)
 					var subcategory = [];
 					for (var j = 0; j < data.responseJSON.response.groups[0].items[i].venue.categories.length; j++){
 						subcategory.push(data.responseJSON.response.groups[0].items[i].venue.categories[j].name);
@@ -118,7 +119,8 @@ var viewmodel = {
 						category: [query],
 						subcategory: subcategory,
 						icon: icon,
-						index: model.places().length
+						index: model.places().length,
+						review: data.responseJSON.response.groups[0].items[i].tips[0].text
 					};
 					model.places.push(place);
 					// Check wether it's the last request
