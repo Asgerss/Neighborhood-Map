@@ -33,6 +33,15 @@ ul {
 #listItems {
 	padding-top: 50px;
 }
+#listHeaderBackground{
+	height: 8%;
+	background-color: #CCCCCC;
+	width: 20%;
+	position: fixed;
+	z-index: 4;
+	left: 0;
+	top: 0;
+}
 #listHeader {
 	font-style: 2em;
 	padding-left: 50px;
