@@ -3,9 +3,11 @@ html, body {
 	margin: 0;
 	padding: 0;
 }
+
 h3 {
 	margin-bottom: 0;
 }
+
 ul {
 	margin-top: 0;
 }
@@ -14,34 +16,39 @@ ul {
 	height: 100%;
 	z-index: 0;
 }
+
 #container {
 	height: 100%;
 	width: 100%;
 }
+
 #list {
 	height: 100%;
-	width: 20%;
+	width: 200px;
 	position: fixed;
 	z-index: 1;
 	left: 0;
 	top: 0;
-	background-color: #CCCCCC;
+	background-color: #cccccc;
 	padding-left: 10px;
 	padding-right: 10px;
 	overflow: auto;
 }
+
 #listItems {
 	padding-top: 50px;
 }
-#listHeaderBackground{
-	height: 8%;
-	background-color: #CCCCCC;
+
+#listHeaderBackground {
+	height: 4em;
+	background-color: #cccccc;
 	width: 20%;
 	position: fixed;
 	z-index: 4;
 	left: 0;
 	top: 0;
 }
+
 #listHeader {
 	font-style: 2em;
 	padding-left: 50px;
@@ -49,17 +56,31 @@ ul {
 	z-index: 5;
 	position: absolute;
 }
+
 #listHeading {
 	padding-left: 10px;
 }
+
 #review {
 	color: #808080;
 }
 
+@media only screen and (max-width: 415px) {
+	#list {
+		width: 100%;
+	}
+}
+
 /* Animated hamburger icon found at http://elijahmanor.com/css-animated-hamburger-icon/ all credit goes to Elijah Manor */
-#nav-toggle { position: absolute; left: 15%; top: 37%; }
-#nav-toggle { cursor: pointer; padding: 10px 35px 16px 0px; }
-#nav-toggle span, #nav-toggle span:before, #nav-toggle span:after {
+#nav-toggle {
+	position: absolute; left: 15%; top: 37%;
+}
+
+#nav-toggle {
+	cursor: pointer; padding: 10px 35px 16px 0px;
+}
+
+#nav-toggle span, #nav-toggle span:before, #nav-toggle span:after{
 	cursor: pointer;
 	border-radius: 1px;
 	height: 5px;
@@ -70,9 +91,11 @@ ul {
 	content: '';
 	z-index: 3;
 }
+
 #nav-toggle span:before {
-	top: -10px; 
+	top: -10px;
 }
+
 #nav-toggle span:after {
 	bottom: -10px;
 }
@@ -80,15 +103,19 @@ ul {
 #nav-toggle span, #nav-toggle span:before, #nav-toggle span:after {
 	transition: all 500ms ease-in-out;
 }
+
 #nav-toggle.active span {
 	background-color: transparent;
 }
+
 #nav-toggle.active span:before, #nav-toggle.active span:after {
 	top: 0;
 }
+
 #nav-toggle.active span:before {
 	transform: rotate(45deg);
 }
+
 #nav-toggle.active span:after {
 	transform: rotate(-45deg);
 }
