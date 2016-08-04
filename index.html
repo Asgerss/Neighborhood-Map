@@ -5,12 +5,11 @@
 	<meta name="viewport" content="initial-scale=1.0">
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="css/style.css">
-	</style>
 	</head>
 	<body>
 	<div id="container">
 		<div id="listHeader">
-			<a id="nav-toggle" href="#" data-bind="click: viewmodel.menuToggle.bind($data)"><span></span></a><h2><b id="listHeading" data-bind="style: { opacity: model.listOpen() ? 1 : 0 }">Places</b></h2></tr>
+			<a id="nav-toggle" href="#" data-bind="click: viewmodel.menuToggle.bind($data)"><span></span></a><h2><b id="listHeading" data-bind="style: { opacity: model.listOpen() ? 1 : 0 }">Places</b></h2>
 		</div>
 		<div id="list" data-bind="visible: model.listOpen()">
 			<div id="listHeaderBackground">
@@ -55,6 +54,6 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
 		<script src="js/script.js"></script>
-		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCiUDq49n825eKvj7ecY7wW_Z3M0k3b-M4&callback=model.initMap" async defer></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCiUDq49n825eKvj7ecY7wW_Z3M0k3b-M4&callback=model.initMap" async defer onerror="viewmodel.googleMapsError()"></script>
 	</body>
 </html>

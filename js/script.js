@@ -117,6 +117,9 @@ var viewmodel = {
 				}
 			}
 		});
+	},
+	googleMapsError: function() {
+		alert("Unable to fetch data from Google Maps");
 	}
 };
 
